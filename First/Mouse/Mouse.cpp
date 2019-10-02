@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("TextOut");
+LPCTSTR lpszClass = TEXT("First");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -20,7 +20,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	WndClass.lpfnWndProc = WndProc;
 	WndClass.lpszClassName = lpszClass;
 	WndClass.lpszMenuName = NULL;
-	WndClass.style = CS_HREDRAW | CS_VREDRAW;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	RegisterClass(&WndClass);
 
 	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, 
@@ -41,22 +41,36 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
-	PAINTSTRUCT ps;
-	RECT rt = { 100, 100, 400, 300 };
-
-	// const char* 형을 char* 형에 할당할 수 없어 변수 자료형 변경됨 
-	const TCHAR* str = TEXT("너무" "길어서" "생략함. :)"); 
-
+	static int x;
+	static int y;
+	static BOOL bNowDraw = FALSE;
+	
 	switch (iMessage)
 	{
+	case WM_LBUTTONDOWN:
+		x = LOWORD(lParam);
+		y = HIWORD(lParam);
+		bNowDraw = TRUE;
+		return 0;
+	case WM_MOUSEMOVE:
+		if (bNowDraw == TRUE)
+		{
+			hdc = GetDC(hWnd);
+			MoveToEx(hdc, x, y, NULL);
+			x = LOWORD(lParam);
+			y = HIWORD(lParam);
+			LineTo(hdc, x, y);
+			ReleaseDC(hWnd, hdc);
+		}
+		return 0;
+	case WM_LBUTTONUP:
+		bNowDraw = FALSE;
+		return 0;
+	case WM_LBUTTONDBLCLK:
+		InvalidateRect(hWnd, NULL, TRUE);
+		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		return 0;
-
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps); 
-		DrawText(hdc, str, -1, &rt, DT_CENTER | DT_WORDBREAK);
-		EndPaint(hWnd, &ps);
 		return 0;
 	}
 

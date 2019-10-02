@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{B57EA901-1C88-4181-B362-2DE0A9E9AA97}</ProjectGuid>
-    <RootNamespace>DrawText</RootNamespace>
+    <ProjectGuid>{BA54DB93-8514-4288-886C-0F3D8ACEB5E3}</ProjectGuid>
+    <RootNamespace>MessageBox</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DrawOut.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

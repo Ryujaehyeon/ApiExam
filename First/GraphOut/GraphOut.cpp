@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("First");
+LPCTSTR lpszClass = TEXT("GraphOut");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -41,16 +41,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
+	PAINTSTRUCT ps;
+	RECT rt = { 100, 100, 400, 300 };
 
 	switch (iMessage)
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
-	case WM_LBUTTONDOWN:
-		hdc = GetDC(hWnd);
-		TextOut(hdc, 100, 100, TEXT("Beautiful Korea"), 15);
-		ReleaseDC(hWnd, hdc);
+
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps); 
+		SetPixel(hdc, 10, 10, RGB(255, 0, 0));
+		MoveToEx(hdc, 50, 50, NULL);
+		LineTo(hdc, 300, 90);
+		Rectangle(hdc, 50, 100, 200, 180);
+		Ellipse(hdc, 220, 100, 400, 200);
+		EndPaint(hWnd, &ps);
 		return 0;
 	}
 

@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("First");
+LPCTSTR lpszClass = TEXT("MessageBox");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -48,9 +48,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_LBUTTONDOWN:
-		hdc = GetDC(hWnd);
-		TextOut(hdc, 100, 100, TEXT("Beautiful Korea"), 15);
-		ReleaseDC(hWnd, hdc);
+		if (MessageBox(hWnd, TEXT("마우스 왼쪽 버튼을 눌렀습니다."),
+			TEXT("메시지 박스"), MB_YESNO) == IDYES)
+		{
+			MessageBeep(MB_ICONASTERISK);
+			MessageBox(hWnd, TEXT("YES 버튼을 눌렀습니다."),
+				TEXT("메시지 박스"), MB_OK);
+		}
+		else
+		{
+			MessageBeep(MB_ICONASTERISK);
+			MessageBox(hWnd, TEXT("NO 버튼을 눌렀습니다."),
+				TEXT("메시지 박스"), MB_OK);
+		};
 		return 0;
 	}
 

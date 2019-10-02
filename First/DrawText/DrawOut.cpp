@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("First");
+LPCTSTR lpszClass = TEXT("DrawOut");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -41,16 +41,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
+	PAINTSTRUCT ps;
+	RECT rt = { 100, 100, 400, 300 };
+
+	// const char* 형을 char* 형에 할당할 수 없어 변수 자료형 변경됨 
+	const TCHAR* str = TEXT("너무" "길어서" "생략함. :)"); 
 
 	switch (iMessage)
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
-	case WM_LBUTTONDOWN:
-		hdc = GetDC(hWnd);
-		TextOut(hdc, 100, 100, TEXT("Beautiful Korea"), 15);
-		ReleaseDC(hWnd, hdc);
+
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps); 
+		DrawText(hdc, str, -1, &rt, DT_CENTER | DT_WORDBREAK);
+		EndPaint(hWnd, &ps);
 		return 0;
 	}
 

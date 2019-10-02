@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCTSTR lpszClass = TEXT("First");
+LPCTSTR lpszClass = TEXT("Key");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -41,16 +41,32 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
+	PAINTSTRUCT ps;
+	static TCHAR str[256];
+	int len;
 
 	switch (iMessage)
 	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
+	case WM_CHAR:
+		len = lstrlen(str);
+		if ((TCHAR)wParam == VK_BACK && len > 0)
+		{//변경해보기
+			str[len-1] = 0;
+		}
+		else if((TCHAR)wParam != VK_BACK)
+		{
+			str[len] = (TCHAR)wParam;
+			str[len + 1] = 0;
+		}
+		InvalidateRect(hWnd, NULL, TRUE);
 		return 0;
-	case WM_LBUTTONDOWN:
-		hdc = GetDC(hWnd);
-		TextOut(hdc, 100, 100, TEXT("Beautiful Korea"), 15);
-		ReleaseDC(hWnd, hdc);
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+		TextOut(hdc, 100, 100, str, lstrlen(str));
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_DESTROY: 
+		PostQuitMessage(0);
 		return 0;
 	}
 

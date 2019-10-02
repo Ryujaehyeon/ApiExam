@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="First.cpp">
+    <ClCompile Include="TextOut.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
