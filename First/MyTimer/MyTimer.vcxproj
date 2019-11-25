@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{401CAFF2-7A4A-4A1A-831F-61FF342931BE}</ProjectGuid>
-    <RootNamespace>GraphOut</RootNamespace>
+    <ProjectGuid>{B6B35462-A3D2-4D05-B23B-054457A00D06}</ProjectGuid>
+    <RootNamespace>MyTimer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GraphOut.cpp" />
+    <ClCompile Include="MyTimer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
