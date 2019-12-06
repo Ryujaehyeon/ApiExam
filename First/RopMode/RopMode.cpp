@@ -2,7 +2,7 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("TransObject");
+LPCTSTR lpszClass = TEXT("RopMode");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -37,41 +37,38 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
+	static int sx, sy, oldx, oldy;
+	static BOOL bNowDraw = FALSE;
 	HDC hdc;
-	PAINTSTRUCT ps;
-	int i;
-	HBRUSH MyBrush, OldBrush;
-	HPEN MyPen, OldPen;
-	
+
 	switch (iMessage) {
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		for (i = 0; i < 250; i++){
-			if (i % 2 == 0) {
-				MoveToEx(hdc, 0, i, NULL);
-				LineTo(hdc, 600, i);
-			}
+	case WM_LBUTTONDOWN:					// 마우스 왼쪽 버튼 누른 상태일 때, 
+		sx = LOWORD(lParam);				// 좌표 X 저장
+		sy = HIWORD(lParam);				// 좌표 Y 저장
+		oldx = sx;
+		oldy = sy;
+		bNowDraw = TRUE;					// 누른 상태를 지속적으로 갱신해준다.
+		return 0;
+
+	case WM_MOUSEMOVE:						// 마우스 무브 중
+		if (bNowDraw) {
+			hdc = GetDC(hWnd);
+			SetROP2(hdc, R2_NOT);			// 그리기 반전 모드로 변경
+			MoveToEx(hdc, sx, sy, NULL);	// 현재 위치 좌표 선정
+			LineTo(hdc, oldx, oldy);		// 현재 좌표 + 이전 좌표를 가지고 선 그리기, R2_NOT로 인해 두번 그려질때 선이 지워짐
+			oldx = LOWORD(lParam);
+			oldy = HIWORD(lParam);
+			MoveToEx(hdc, sx, sy, NULL);    // 현재 위치 좌표 선정
+			LineTo(hdc, oldx, oldy);        // 현재 좌표 + 이전 좌표를 가지고 선 그리기
+			ReleaseDC(hWnd, hdc);       
 		}
-
-		//빨간 펜 초록 브러시
-		MyBrush = CreateSolidBrush(RGB(0, 255, 0));
-		OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
-		MyPen = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
-		OldPen = (HPEN)SelectObject(hdc, MyPen);
-		Ellipse(hdc, 20, 20, 150, 150);
-
-		//빨간 펜 널 브러시
-		SelectObject(hdc, GetStockObject(NULL_BRUSH));
-		Ellipse(hdc, 220, 20, 350, 150);
-
-		//널 펜, 초록 브러시
-		SelectObject(hdc, MyBrush);
-		SelectObject(hdc, GetStockObject(NULL_PEN));
-		Ellipse(hdc, 420, 20, 550, 150);
-
-		DeleteObject(SelectObject(hdc, OldBrush));
-		DeleteObject(SelectObject(hdc, OldPen));
-		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_LBUTTONUP:
+		bNowDraw = FALSE;
+		hdc = GetDC(hWnd);
+		MoveToEx(hdc, sx, sy, NULL);
+		LineTo(hdc, oldx, oldy);
+		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
