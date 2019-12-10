@@ -130,7 +130,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
             break;
         }
         return 0;
-    case WM_LBUTTONUP:
+    case WM_LBUTTONUP: // 마우스 버튼 업일 때 다시 그리는 이유는 SetROP2(hdc, R2_NOT)로 인해 겹쳤을때 지워진 부분 없게 그려주기 위함
         bNowDraw = FALSE;
         switch (eMenuNumber) {
         case Shape::eCURVE:
