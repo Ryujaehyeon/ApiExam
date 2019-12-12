@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bitmap", "Bitmap\Bitmap.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawBitmap", "DrawBitmap\DrawBitmap.vcxproj", "{99294212-B0AA-409F-A3E6-CE8A394DD673}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Font", "Font\Font.vcxproj", "{0075A460-E7D8-4C4A-BB98-569410E26AA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -281,6 +283,14 @@ Global
 		{99294212-B0AA-409F-A3E6-CE8A394DD673}.Release|x64.Build.0 = Release|x64
 		{99294212-B0AA-409F-A3E6-CE8A394DD673}.Release|x86.ActiveCfg = Release|Win32
 		{99294212-B0AA-409F-A3E6-CE8A394DD673}.Release|x86.Build.0 = Release|Win32
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Debug|x64.ActiveCfg = Debug|x64
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Debug|x64.Build.0 = Debug|x64
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Debug|x86.ActiveCfg = Debug|Win32
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Debug|x86.Build.0 = Debug|Win32
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Release|x64.ActiveCfg = Release|x64
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Release|x64.Build.0 = Release|x64
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Release|x86.ActiveCfg = Release|Win32
+		{0075A460-E7D8-4C4A-BB98-569410E26AA6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
