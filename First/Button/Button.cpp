@@ -2,7 +2,7 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("TextRot");
+LPCTSTR lpszClass = TEXT("MyButton");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -37,32 +37,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-    HDC hdc;
-    PAINTSTRUCT ps;
-    int i;
-    const TCHAR* str = TEXT("               Beautiful");
-    HFONT MyFont, OldFont;
     switch (iMessage) {
     case WM_CREATE:
         hWndMain = hWnd;
+        CreateWindow(TEXT("button"), TEXT("Click Me"), WS_CHILD | WS_VISIBLE |
+            BS_PUSHBUTTON, 20, 20, 100, 25, hWnd, (HMENU)0, g_hInst, NULL);
+        CreateWindow(TEXT("button"), TEXT("Me Two"), WS_CHILD | WS_VISIBLE |
+            BS_PUSHBUTTON, 20, 50, 100, 25, hWnd, (HMENU)1, g_hInst, NULL);
         return 0;
-    case WM_PAINT:
-        hdc = BeginPaint(hWnd, &ps);
-        SetBkMode(hdc, TRANSPARENT);
-        for (i = 0; i < 900; i+=100)
-        {
-            // 세 번째 인수에 i를 100씩 증가하여 각도를 바꾸는 코드
-            MyFont = CreateFont(50, 0, i, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-                ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                DEFAULT_QUALITY, VARIABLE_PITCH | FF_SWISS,
-                TEXT("Times New Roman"));
-            OldFont = (HFONT)SelectObject(hdc, MyFont);
-            TextOut(hdc, 0, 450, str, lstrlen(str));
-            SelectObject(hdc, OldFont);
-            DeleteObject(MyFont);
+    case WM_COMMAND:
+        switch (LOWORD(wParam)) {
+        case 0:
+            MessageBox(hWnd, TEXT("First Button Clicked"), TEXT("Button"), MB_OK);
+            break;
+        case 1:
+            MessageBox(hWnd, TEXT("Second Button Clicked"), TEXT("Button"), MB_OK);
+            break;
         }
-        EndPaint(hWnd, &ps);
-        return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;

@@ -69,8 +69,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SelectObject(hdc, GetStockObject(NULL_PEN));
 		Ellipse(hdc, 420, 20, 550, 150);
 
-		DeleteObject(SelectObject(hdc, OldBrush));
-		DeleteObject(SelectObject(hdc, OldPen));
+        SelectObject(hdc, OldBrush);
+        SelectObject(hdc, OldPen);
+		DeleteObject(MyBrush);
+		DeleteObject(MyPen);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
