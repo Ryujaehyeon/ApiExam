@@ -12,7 +12,9 @@ enum class tag_Major
     MANAGE, KOREAN, ENGLISH, LAW
 }Major;
 const TCHAR* arMajor[] = { TEXT("경영학과"), TEXT("국문학과"), TEXT("영문학과"), TEXT("법학과"), };
+
 INT_PTR CALLBACK MajorDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
+int GetCheckedRadioButton(HWND hDlg, int iFirst, int iLast);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -89,10 +91,11 @@ INT_PTR CALLBACK MajorDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lP
         switch (LOWORD(wParam)) {
         case IDOK:
             bMale = (IsDlgButtonChecked(hDlg, IDC_MALE) == BST_CHECKED);
-            if (IsDlgButtonChecked(hDlg, IDC_MAJOR1) == BST_CHECKED)Major = tag_Major::MANAGE;
-            if (IsDlgButtonChecked(hDlg, IDC_MAJOR2) == BST_CHECKED)Major = tag_Major::KOREAN;
-            if (IsDlgButtonChecked(hDlg, IDC_MAJOR3) == BST_CHECKED)Major = tag_Major::ENGLISH;
-            if (IsDlgButtonChecked(hDlg, IDC_MAJOR4) == BST_CHECKED)Major = tag_Major::LAW;
+            //if (IsDlgButtonChecked(hDlg, IDC_MAJOR1) == BST_CHECKED)Major = tag_Major::MANAGE;
+            //if (IsDlgButtonChecked(hDlg, IDC_MAJOR2) == BST_CHECKED)Major = tag_Major::KOREAN;
+            //if (IsDlgButtonChecked(hDlg, IDC_MAJOR3) == BST_CHECKED)Major = tag_Major::ENGLISH;
+            //if (IsDlgButtonChecked(hDlg, IDC_MAJOR4) == BST_CHECKED)Major = tag_Major::LAW;
+            Major = tag_Major(GetCheckedRadioButton(hDlg, IDC_MAJOR1, IDC_MAJOR4) - IDC_MAJOR1);
             EndDialog(hDlg, IDOK);
             return TRUE;
         case IDCANCEL:
@@ -102,4 +105,14 @@ INT_PTR CALLBACK MajorDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lP
         break;
     }
     return FALSE;
+}
+
+int GetCheckedRadioButton(HWND hDlg, int iFirst, int iLast) 
+{
+    int id;
+    for (id = iFirst; id <= iLast; id++) {
+        if (IsDlgButtonChecked(hDlg, id) == BST_CHECKED)
+            return id;
+    }
+    return -1;
 }
