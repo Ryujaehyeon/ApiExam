@@ -49,7 +49,7 @@ enum class eRadio
 
 HWND r1, r2, r3, r4, c1;
 int Graph = 0;
-COLORREF Color = RGB(0, 0, 0);
+COLORREF SelectColor = RGB(0, 0, 0);
 const UINT uDefWidth = 2;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
@@ -102,16 +102,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
             else iWidth = uDefWidth;
             break;
         case (UINT)eRadio::ID_R1:
-            Color = RGB(255, 0, 0);
+            SelectColor = RGB(255, 0, 0);
             break;
         case (UINT)eRadio::ID_R2:
-            Color = RGB(0, 0, 255);
+            SelectColor = RGB(0, 0, 255);
             break;
         case (UINT)eRadio::ID_R3:
-            Color = RGB(255, 255, 0);
+            SelectColor = RGB(255, 255, 0);
             break;
         case (UINT)eRadio::ID_R4:
-            Color = RGB(0, 0, 0);
+            SelectColor = RGB(0, 0, 0);
             break;
         }
         return 0;
@@ -124,7 +124,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
         if (bNowDraw)
         {
             hdc = GetDC(hWnd);
-            MyPen = CreatePen(PS_SOLID, iWidth, Color);
+            MyPen = CreatePen(PS_SOLID, iWidth, SelectColor);
             OldPen = (HPEN)SelectObject(hdc, MyPen);
 
             MoveToEx(hdc, x, y, NULL);

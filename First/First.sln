@@ -81,6 +81,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DlgCheck", "DlgCheck\DlgChe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReadingCounter", "ReadingCounter\ReadingCounter.vcxproj", "{98128BC3-8FDB-4258-A0F9-F5BBDF89DD6D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePaint2", "SimplePaint2\SimplePaint2.vcxproj", "{A34AA1A1-DD84-4490-92E2-2457C1A05615}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -401,6 +403,14 @@ Global
 		{98128BC3-8FDB-4258-A0F9-F5BBDF89DD6D}.Release|x64.Build.0 = Release|x64
 		{98128BC3-8FDB-4258-A0F9-F5BBDF89DD6D}.Release|x86.ActiveCfg = Release|Win32
 		{98128BC3-8FDB-4258-A0F9-F5BBDF89DD6D}.Release|x86.Build.0 = Release|Win32
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Debug|x64.ActiveCfg = Debug|x64
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Debug|x64.Build.0 = Debug|x64
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Debug|x86.ActiveCfg = Debug|Win32
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Debug|x86.Build.0 = Debug|Win32
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Release|x64.ActiveCfg = Release|x64
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Release|x64.Build.0 = Release|x64
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Release|x86.ActiveCfg = Release|Win32
+		{A34AA1A1-DD84-4490-92E2-2457C1A05615}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

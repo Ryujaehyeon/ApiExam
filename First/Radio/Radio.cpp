@@ -47,7 +47,7 @@ enum class eRadio
 
 HWND r1, r2, r3, r4, r5, r6;
 int Graph = 0;
-COLORREF Color = RGB(0, 0, 0);
+COLORREF SelectColor = RGB(0, 0, 0);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
@@ -94,20 +94,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
             Graph = 2;
             break;
         case (int)eRadio::ID_R4:
-            Color = RGB(0, 0, 0);
+            SelectColor = RGB(0, 0, 0);
             break;
         case (int)eRadio::ID_R5:
-            Color = RGB(255, 0, 0);
+            SelectColor = RGB(255, 0, 0);
             break;
         case (int)eRadio::ID_R6:
-            Color = RGB(0, 0, 255);
+            SelectColor = RGB(0, 0, 255);
             break;
         }
         InvalidateRect(hWnd, NULL, TRUE);
         return 0;
     case WM_PAINT:
         hdc = BeginPaint(hWnd, &ps);
-        MyBrush = CreateSolidBrush(Color);
+        MyBrush = CreateSolidBrush(SelectColor);
         OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
         switch (Graph) {
         case 0:
