@@ -2,12 +2,12 @@
 #include "resource.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK PaintDlgProc(HWND , UINT , WPARAM , LPARAM );
+INT_PTR CALLBACK PaintDlgProc(HWND, UINT, WPARAM, LPARAM);
 int GetCheckedRadioButton(HWND hDlg, int iFirst, int iLast);
 
 HINSTANCE g_hInst;
-HWND hWndMain;
-LPCTSTR lpszClass = TEXT("SimplePaint2");
+HWND hWndMain, hMDlg;
+LPCTSTR lpszClass = TEXT("SimplePaint3");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     LPSTR lpszCmdParam, int nCmdShow)
@@ -35,10 +35,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     ShowWindow(hWnd, nCmdShow);
 
-    while (GetMessage(&Message, NULL, 0, 0))
-    {
-        TranslateMessage(&Message);
-        DispatchMessage(&Message);
+    while (GetMessage(&Message, NULL, 0, 0)) {
+        if (!IsWindow(hMDlg) || !IsDialogMessage(hMDlg, &Message)) {
+            TranslateMessage(&Message);
+            DispatchMessage(&Message);
+        }
     }
 
     return (int)Message.wParam;
@@ -71,8 +72,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
         SelectColor = tag_ColorRef::eBlack;
         return 0;
     case WM_RBUTTONDOWN:
-        DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOGPAINT),
-            hWnd, PaintDlgProc);
+        if (!IsWindow(hMDlg)) {
+            hMDlg = CreateDialog(g_hInst, MAKEINTRESOURCE(IDD_DIALOGPAINT),
+                hWnd, PaintDlgProc);
+            ShowWindow(hMDlg, SW_SHOW);
+        }
         return 0;
     case WM_LBUTTONDOWN:
         x = LOWORD(lParam);
@@ -128,15 +132,18 @@ INT_PTR CALLBACK PaintDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lP
     case WM_COMMAND:
         switch (LOWORD(wParam)) {
         case IDOK:
+        case ID_CHANGE:
             SelectColor = tag_ColorRef(GetCheckedRadioButton(hDlg, IDC_RADIO_RED,
                 IDC_RADIO_BLACK) - IDC_RADIO_RED);
 
             bBold = (IsDlgButtonChecked(hDlg, IDC_CHECK_BOLD) == BST_CHECKED);
-            if (bBold) 
+            if (bBold)
                 iWidth = 5;
-            else 
+            else
                 iWidth = uDefWidth;
-            EndDialog(hDlg, IDOK);
+            return TRUE;
+        case IDC_BUTTON_CLEAR:
+            InvalidateRect(hWndMain, NULL, TRUE);
             return TRUE;
         case IDCANCEL:
             EndDialog(hDlg, IDCANCEL);

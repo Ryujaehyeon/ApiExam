@@ -4,9 +4,10 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("InfoDlg");
+LPCTSTR lpszClass = TEXT("Mless");
 int x, y;
 TCHAR str[128];
+HWND hMDlg;
 
 INT_PTR CALLBACK MlessDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
@@ -35,8 +36,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
     ShowWindow(hWnd, nCmdShow);
 
     while (GetMessage(&Message, NULL, 0, 0)) {
-        TranslateMessage(&Message);
-        DispatchMessage(&Message);
+        if (!IsWindow(hMDlg) || !IsDialogMessage(hMDlg, &Message)) {
+            TranslateMessage(&Message);
+            DispatchMessage(&Message);
+        }
     }
     return (int)Message.wParam;
 }
@@ -59,9 +62,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
         EndPaint(hWnd, &ps);
         return 0;
     case WM_LBUTTONDOWN:
-        if (DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1),
-            hWnd, MlessDlgProc) == IDOK)
-            InvalidateRect(hWnd, NULL, TRUE);
+        if (!IsWindow(hMDlg)) {
+            hMDlg = CreateDialog(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1),
+            hWnd, MlessDlgProc);
+            ShowWindow(hMDlg, SW_SHOW);
+        }
         return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -80,13 +85,14 @@ INT_PTR CALLBACK MlessDlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lP
         return TRUE;
     case WM_COMMAND:
         switch (LOWORD(wParam)) {
-        case IDOK:
+        case ID_CHANGE:
             GetDlgItemText(hDlg, IDC_STR, str, 128);
             x = GetDlgItemInt(hDlg, IDC_X, NULL, FALSE);
             y = GetDlgItemInt(hDlg, IDC_Y, NULL, FALSE);
-            EndDialog(hDlg, IDOK);
+            InvalidateRect(hWndMain, NULL, TRUE);
             return TRUE;
         case IDCANCEL:
+        case ID_CLOSE:
             EndDialog(hDlg, IDCANCEL);
             return TRUE;
         }
