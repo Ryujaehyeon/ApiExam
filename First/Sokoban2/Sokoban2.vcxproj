@@ -147,11 +147,14 @@
     <ResourceCompile Include="Sokoban2.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp" />
-    <Image Include="bitmap2.bmp" />
-    <Image Include="bmp00001.bmp" />
-    <Image Include="bmp00002.bmp" />
-    <Image Include="bmp00003.bmp" />
+    <Image Include="Pack.bmp" />
+    <Image Include="Wall.bmp" />
+    <Image Include="ManLeft.bmp" />
+    <Image Include="Tile.bmp" />
+    <Image Include="Point.bmp" />
+    <Image Include="ManRight.bmp" />
+    <Image Include="ManDown.bmp" />
+    <Image Include="ManUp.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

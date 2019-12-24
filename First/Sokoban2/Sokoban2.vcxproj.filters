@@ -30,19 +30,28 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp">
+    <Image Include="Pack.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bitmap2.bmp">
+    <Image Include="Wall.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bmp00001.bmp">
+    <Image Include="ManLeft.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bmp00002.bmp">
+    <Image Include="Tile.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bmp00003.bmp">
+    <Image Include="Point.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ManUp.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ManDown.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ManRight.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

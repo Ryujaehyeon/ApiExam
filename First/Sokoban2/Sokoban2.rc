@@ -50,15 +50,21 @@ END
 // Bitmap
 //
 
-IDB_PACK                BITMAP                  "bitmap1.bmp"
+IDB_PACK                BITMAP                  "Pack.bmp"
 
-IDB_WALL                BITMAP                  "bitmap2.bmp"
+IDB_WALL                BITMAP                  "Wall.bmp"
 
-IDB_MAN                 BITMAP                  "bmp00001.bmp"
+IDB_MANLEFT             BITMAP                  "ManLeft.bmp"
 
-IDB_TILE                BITMAP                  "bmp00002.bmp"
+IDB_TILE                BITMAP                  "Tile.bmp"
 
-IDB_CAP                 BITMAP                  "bmp00003.bmp"
+IDB_POINT               BITMAP                  "Point.bmp"
+
+IDB_MANRIGHT            BITMAP                  "ManRight.bmp"
+
+IDB_MANUP               BITMAP                  "ManUp.bmp"
+
+IDB_MANDOWN             BITMAP                  "ManDown.bmp"
 
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
