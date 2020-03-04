@@ -2,7 +2,7 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("Class");
+LPCTSTR lpszClass = TEXT("DeferWindowPos");
 
 //typedef struct tagWNDCLASS
 //{
@@ -42,7 +42,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
-	while (GetMessage(&Message, NULL, 0, 0)){
+	while (GetMessage(&Message, NULL, 0, 0)) {
 		TranslateMessage(&Message);
 		DispatchMessage(&Message);
 	}
@@ -51,16 +51,30 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	HDC hdc;
-	PAINTSTRUCT ps;
-	 
+	static HWND hBtn[5];
+	int i;
+	HDWP hdwp;
 	switch (iMessage) {
 	case WM_CREATE:
-		hWndMain = hWnd;
+		for (i = 0; i < 5; i++) {
+			hBtn[i] = CreateWindow(TEXT("button"), TEXT("text"),
+				WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+				0, 0, 0, 0, hWnd, (HMENU)i, g_hInst, NULL);
+		}
 		return 0;
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
+	case WM_LBUTTONDOWN:
+		hdwp = BeginDeferWindowPos(5);
+		for (i = 0; i < 5; i++) {
+			hdwp = DeferWindowPos(hdwp, hBtn[i], NULL, i * 120, i * 50, 100, 20 + i * 8, SWP_NOZORDER);
+		}
+		EndDeferWindowPos(hdwp);
+		return 0;
+	case WM_RBUTTONDOWN:
+		hdwp = BeginDeferWindowPos(5);
+		for (i = 0; i < 5; i++) {
+			hdwp = DeferWindowPos(hdwp, hBtn[i], NULL, 480 - i * 120, i * 50, 100, 52 - i * 8, SWP_NOZORDER);
+		}
+		EndDeferWindowPos(hdwp);
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);

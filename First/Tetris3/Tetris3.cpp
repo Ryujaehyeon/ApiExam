@@ -1,22 +1,10 @@
 #include <Windows.h>
+#include "resource.h"
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("Class");
-
-//typedef struct tagWNDCLASS
-//{
-//	UINT		style;
-//	WNDPROC		lpfnWndProc;
-//	int			cbClsExtra;
-//	int			cbWndExtra;
-//	HINSTANCE	hInstance;
-//	HICON		hIcon;
-//	HCURSOR		hCursor;
-//	HBRUSH		hbrBackground;
-//	LPCSTR		lpszMenuName;
-//	LPCSTR		lpszClassName;
-//}WNDCLASS;
+LPCTSTR lpszClass = TEXT("Tetris3");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -41,8 +29,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
+	hWndMain = hWnd;
 
-	while (GetMessage(&Message, NULL, 0, 0)){
+	while (GetMessage(&Message, NULL, 0, 0)) {
 		TranslateMessage(&Message);
 		DispatchMessage(&Message);
 	}
@@ -53,7 +42,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-	 
+
 	switch (iMessage) {
 	case WM_CREATE:
 		hWndMain = hWnd;

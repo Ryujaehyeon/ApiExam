@@ -54,6 +54,7 @@ void DrawBitmap(HDC hdc, int x, int y, HBITMAP hBit) {
     SelectObject(MemDC, oldBitmap);
     DeleteDC(MemDC);
 }
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
     HDC hdc, MemDC;

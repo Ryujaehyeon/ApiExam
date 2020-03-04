@@ -2,7 +2,7 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWndMain;
-LPCTSTR lpszClass = TEXT("Class");
+LPCTSTR lpszClass = TEXT("LCDTest");
 
 //typedef struct tagWNDCLASS
 //{
@@ -27,7 +27,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
-	WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	WndClass.hInstance = hInstance;
@@ -37,31 +37,43 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
 
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
+	hWnd = CreateWindowEx(WS_EX_TOPMOST, lpszClass, lpszClass, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
+	hWndMain = hWnd;
 
-	while (GetMessage(&Message, NULL, 0, 0)){
+	while (GetMessage(&Message, NULL, 0, 0)) {
 		TranslateMessage(&Message);
 		DispatchMessage(&Message);
 	}
 	return (int)Message.wParam;
 }
 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-	 
+	const TCHAR* Mes = TEXT("팝업 윈도우 입니다.");
+	UINT nHit;
+
 	switch (iMessage) {
-	case WM_CREATE:
-		hWndMain = hWnd;
-		return 0;
+	//case WM_CREATE:
+	//	return 0;
+	case WM_COMMAND:
+
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
+		SetBkMode(hdc, TRANSPARENT);
+		TextOut(hdc, 10, 10, Mes, lstrlen(Mes));
 		EndPaint(hWnd, &ps);
 		return 0;
+	case WM_NCHITTEST:
+		nHit = DefWindowProc(hWnd, iMessage, wParam, lParam);
+		if (nHit == HTCLIENT)
+			nHit = HTCAPTION;
+		return nHit;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
